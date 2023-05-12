@@ -36,3 +36,4 @@ build/
 
 # environment vars
 .env
+env.properties
