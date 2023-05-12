@@ -1,14 +1,14 @@
 package xyz.scritto.controller
 
 import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
-@Controller
+@RestController
 class Echo {
 
     @GetMapping("/echo")
-    fun  echo(): ResponseEntity<String> {
+    fun echo(): ResponseEntity<String> {
         return ResponseEntity.ok().body("Hello World!");
     }
 }
