@@ -43,4 +43,4 @@ class JwtAuthorizationFilter(
         val user = service.loadUserByUsername(email)
         return UsernamePasswordAuthenticationToken(user, null, user.authorities)
     }
-}
+};

@@ -10,16 +10,15 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.stereotype.Component
 import xyz.scritto.dto.auth.LoginDto
 import xyz.scritto.model.auth.UserSecurity
-import java.util.*
+import java.util.Collections
+import java.util.Date
 
-@Component
 class JwtAuthenticationFilter(
     private val jwtTokenUtil: JwtTokenUtil,
     private val authenticationManager: AuthenticationManager
-) : UsernamePasswordAuthenticationFilter(authenticationManager) {
+) : UsernamePasswordAuthenticationFilter() {
 
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse): Authentication {
         val credentials = ObjectMapper().readValue(request.inputStream, LoginDto::class.java)
@@ -28,7 +27,6 @@ class JwtAuthenticationFilter(
             credentials.password,
             Collections.singleton(SimpleGrantedAuthority("user"))
         )
-
         return authenticationManager.authenticate(auth)
     }
 
@@ -64,4 +62,4 @@ class JwtAuthenticationFilter(
             return ObjectMapper().writeValueAsString(this)
         }
     }
-}
+};

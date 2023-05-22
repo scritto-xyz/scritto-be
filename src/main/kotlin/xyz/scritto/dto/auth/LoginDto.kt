@@ -1,9 +1,7 @@
 package xyz.scritto.dto.auth
 
-import java.io.Serializable
+import java.beans.ConstructorProperties
 
-data class LoginDto(val email: String, val password: String) : Serializable {
-    companion object {
-        private const val serialVersionUID = 5926468583005150707L
-    }
-}
+data class LoginDto
+@ConstructorProperties("email", "password")
+constructor(val email: String, val password: String)

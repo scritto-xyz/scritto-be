@@ -15,5 +15,5 @@ class UserSecurity(
     override fun isAccountNonExpired() = true
     override fun isAccountNonLocked() = true
     override fun isCredentialsNonExpired() = true
-    override fun isEnabled() = true
+    override fun isEnabled() = true;
 }
