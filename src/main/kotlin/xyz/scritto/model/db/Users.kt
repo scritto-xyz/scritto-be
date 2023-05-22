@@ -1,4 +1,4 @@
-package xyz.scritto.model
+package xyz.scritto.model.db
 
 import org.ktorm.database.Database
 import org.ktorm.entity.Entity
