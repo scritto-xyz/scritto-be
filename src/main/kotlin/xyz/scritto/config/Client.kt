@@ -6,6 +6,7 @@ import org.ktorm.database.Database
 import org.ktorm.jackson.KtormModule
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import javax.sql.DataSource
 
 @Configuration
@@ -23,5 +24,10 @@ class Client(private val dataSource: DataSource) {
     @Bean
     fun provideEmailValidator(): EmailValidator {
         return EmailValidator.getInstance()
+    }
+
+    @Bean
+    fun provideBCryptPasswordEncoder(): BCryptPasswordEncoder {
+        return BCryptPasswordEncoder()
     }
 }

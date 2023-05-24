@@ -21,7 +21,7 @@ class UsersRepository(private val database: Database) {
     }
 
     fun createUser(user: User): User {
-        val newId = database.users.add(user)
-        return database.users.find { it.id eq newId }!!
+        database.users.add(user)
+        return user
     }
 }

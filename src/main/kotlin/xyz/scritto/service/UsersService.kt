@@ -3,6 +3,7 @@ package xyz.scritto.service
 import org.apache.commons.validator.routines.EmailValidator
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import xyz.scritto.dto.auth.LoginDto
 import xyz.scritto.model.db.User
 import xyz.scritto.repository.UsersRepository
 
@@ -17,7 +18,7 @@ class UsersService(
         return usersRepository.listUsers()
     }
 
-    fun getUserByUsername(username: String): User? {
+    fun getUserByEmail(username: String): User? {
         return usersRepository.getUserByEmail(username)
     }
 
@@ -29,5 +30,13 @@ class UsersService(
 
     fun validateEmail(email: String): Boolean {
         return emailValidator.isValid(email)
+    }
+
+    fun authenticate(credentials: LoginDto): User {
+        val dbUser = usersRepository.getUserByEmail(credentials.email)
+        if (dbUser == null || !passwordEncoder.matches(credentials.password, dbUser.password)) {
+            throw Exception("Invalid credentials")
+        }
+        return dbUser
     }
 }
