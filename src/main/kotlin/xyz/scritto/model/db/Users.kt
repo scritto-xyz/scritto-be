@@ -7,17 +7,17 @@ import org.ktorm.schema.Table
 import org.ktorm.schema.enum
 import org.ktorm.schema.int
 import org.ktorm.schema.jdbcTimestamp
-import org.ktorm.schema.timestamp
 import org.ktorm.schema.varchar
 import java.sql.Timestamp
 
 
-enum class UserType(val value: String) {
-    Client("Client"), Artist("Artist")
+enum class UserType {
+    CLIENT, ARTIST
 }
 
-object Users: Table<User>("users") {
-    val id = int("id").primaryKey().bindTo { it.id }
+object Users : Table<User>("users") {
+    val id = int("id").primaryKey()
+        .bindTo { it.id }
     val first_name = varchar("first_name").bindTo { it.firstName }
     val last_name = varchar("last_name").bindTo { it.lastName }
     val username = varchar("username").bindTo { it.username }
@@ -31,8 +31,9 @@ object Users: Table<User>("users") {
     val updatedAt = jdbcTimestamp("updated_ts").bindTo { it.updatedTs }
 }
 
-interface User: Entity<User> {
-    companion object: Entity.Factory<User>()
+interface User : Entity<User> {
+    companion object : Entity.Factory<User>()
+
     val id: Int
     val firstName: String
     val lastName: String
