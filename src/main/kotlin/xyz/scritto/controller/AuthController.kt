@@ -18,24 +18,6 @@ class AuthController(
     private val userAuthenticationProvider: UserAuthenticationProvider
 ) {
 
-//    @PostMapping("/login")
-//    fun login(@RequestBody authenticationRequest: LoginDto): ResponseEntity<*> {
-//        authenticate(authenticationRequest.email, authenticationRequest.password)
-//        val userDetails = userDetailsService.loadUserByUsername(authenticationRequest.email)
-//        val token = jwtTokenUtil.generateToken(userDetails.username)
-//        return ResponseEntity.ok(JwtResponse(token))
-//    }
-//
-//    private fun authenticate(email: String, password: String) {
-//        try {
-//            authenticationManager.authenticate(UsernamePasswordAuthenticationToken(email, password))
-//        } catch (e: DisabledException) {
-//            throw Exception("USER_DISABLED", e)
-//        } catch (e: BadCredentialsException) {
-//            throw Exception("INVALID_CREDENTIALS", e)
-//        }
-//    }
-
     @PostMapping("/login")
     fun login(@AuthenticationPrincipal user: User): ResponseEntity<ResponseJwt> {
         val responseJwt = ResponseJwt(userAuthenticationProvider.createToken(user.email))
