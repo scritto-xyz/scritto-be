@@ -31,6 +31,8 @@ class SecurityConfig(
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeHttpRequests()
+            .requestMatchers(HttpMethod.GET, "/echo")
+            .permitAll()
             .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register")
             .permitAll()
             .anyRequest()
