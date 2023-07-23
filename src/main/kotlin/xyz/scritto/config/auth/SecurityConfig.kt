@@ -25,6 +25,8 @@ class SecurityConfig(
                 JwtAuthFilter(userAuthenticationProvider),
                 UsernamePasswordAuthFilter::class.java
             )
+            .cors()
+            .and()
             .csrf()
             .disable()
             .sessionManagement()
