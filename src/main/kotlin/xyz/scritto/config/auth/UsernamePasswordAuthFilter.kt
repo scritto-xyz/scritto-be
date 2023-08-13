@@ -1,6 +1,7 @@
 package xyz.scritto.config.auth
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.exc.ValueInstantiationException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -22,7 +23,13 @@ class UsernamePasswordAuthFilter(private val provider: UserAuthenticationProvide
         if (request.servletPath == "/auth/login"
             && HttpMethod.POST.matches(request.method)
         ) {
-            val credentials = MAPPER.readValue(request.inputStream, LoginDto::class.java)
+            val credentials: LoginDto
+            try {
+                credentials = MAPPER.readValue(request.inputStream, LoginDto::class.java)
+            } catch (ex: ValueInstantiationException) {
+                throw Exception("Invalid body")
+            }
+
             try {
                 SecurityContextHolder.getContext().authentication = provider.validateCredentials(credentials)
             } catch (e: RuntimeException) {
