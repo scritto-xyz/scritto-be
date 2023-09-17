@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 import xyz.scritto.config.auth.UserAuthenticationProvider
 import xyz.scritto.dto.auth.LoginDto
 import xyz.scritto.dto.auth.ResponseJwt
-import xyz.scritto.model.db.User
+import xyz.scritto.dto.auth.SignupDto
 import xyz.scritto.service.UsersService
 
 @RestController
@@ -33,7 +33,7 @@ class AuthController(
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody newUser: User): ResponseEntity<*> {
+    fun register(@RequestBody newUser: SignupDto): ResponseEntity<*> {
         if (!usersService.validateEmail(newUser.email)) {
             return ResponseEntity.badRequest()
                 .body("Invalid email")
@@ -46,6 +46,9 @@ class AuthController(
         }
 
         val createdUser = usersService.createUser(newUser)
+            ?: return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error creating user")
+
         return ResponseEntity.ok(createdUser)
     }
 }

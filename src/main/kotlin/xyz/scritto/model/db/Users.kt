@@ -34,18 +34,18 @@ object Users : Table<User>("users") {
 interface User : Entity<User> {
     companion object : Entity.Factory<User>()
 
-    val id: Int
+    val id: Int?
     val firstName: String
-    val lastName: String
-    val username: String
+    val lastName: String?
+    val username: String?
     val email: String
-    val country: String
-    val state: String
-    val city: String
+    val country: String?
+    val state: String?
+    val city: String?
     val userType: UserType
     val password: String
-    val createdTs: Timestamp
-    val updatedTs: Timestamp
+    val createdTs: Timestamp?
+    val updatedTs: Timestamp?
 }
 
 val Database.users get() = this.sequenceOf(Users)

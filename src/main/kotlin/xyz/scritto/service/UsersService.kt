@@ -4,6 +4,7 @@ import org.apache.commons.validator.routines.EmailValidator
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import xyz.scritto.dto.auth.LoginDto
+import xyz.scritto.dto.auth.SignupDto
 import xyz.scritto.model.db.User
 import xyz.scritto.repository.UsersRepository
 
@@ -22,9 +23,9 @@ class UsersService(
         return usersRepository.getUserByEmail(username)
     }
 
-    fun createUser(user: User): User {
+    fun createUser(user: SignupDto): User? {
         val encodedPassword = passwordEncoder.encode(user.password)
-        user["password"] = encodedPassword
+        user.password = encodedPassword
         return usersRepository.createUser(user)
     }
 
