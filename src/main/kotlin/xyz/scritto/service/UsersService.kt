@@ -1,6 +1,8 @@
 package xyz.scritto.service
 
 import org.apache.commons.validator.routines.EmailValidator
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import xyz.scritto.dto.auth.LoginDto
@@ -14,6 +16,9 @@ class UsersService(
     private val passwordEncoder: BCryptPasswordEncoder,
     private val emailValidator: EmailValidator,
 ) {
+    companion object {
+        val logger: Logger = LoggerFactory.getLogger(this::class.java)
+    }
 
     fun getUsers(): List<User> {
         return usersRepository.listUsers()
@@ -26,7 +31,12 @@ class UsersService(
     fun createUser(user: SignupDto): User? {
         val encodedPassword = passwordEncoder.encode(user.password)
         user.password = encodedPassword
-        return usersRepository.createUser(user)
+        return try {
+            usersRepository.createUser(user)
+        } catch (err: Exception) {
+            logger.error("Error occurred with creating user, email: ${user.email}")
+            null
+        }
     }
 
     fun validateEmail(email: String): Boolean {
