@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import xyz.scritto.config.auth.UserAuthenticationProvider
-import xyz.scritto.dto.auth.LoginDto
 import xyz.scritto.dto.auth.ResponseJwt
 import xyz.scritto.dto.auth.SignupDto
+import xyz.scritto.model.db.User
 import xyz.scritto.service.UsersService
 
 @RestController
@@ -21,7 +21,7 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@AuthenticationPrincipal user: LoginDto): ResponseEntity<ResponseJwt> {
+    fun login(@AuthenticationPrincipal user: User): ResponseEntity<ResponseJwt> {
         val responseJwt: ResponseJwt
         try {
             responseJwt = ResponseJwt(userAuthenticationProvider.createToken(user.email))
