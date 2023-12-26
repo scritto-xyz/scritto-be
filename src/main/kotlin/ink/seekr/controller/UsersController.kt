@@ -16,4 +16,10 @@ class UsersController(private val usersService: UsersService) {
         return ResponseEntity.ok()
             .body(usersService.getUsers())
     }
+
+    @GetMapping("/artists")
+    fun listArtists(): ResponseEntity<List<User>> {
+        return ResponseEntity.ok()
+            .body(usersService.getArtists())
+    }
 }

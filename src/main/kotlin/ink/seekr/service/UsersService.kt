@@ -24,6 +24,10 @@ class UsersService(
         return usersRepository.listUsers()
     }
 
+    fun getArtists(): List<User> {
+        return usersRepository.listArtists()
+    }
+
     fun getUserByEmail(username: String): User? {
         return usersRepository.getUserByEmail(username)
     }

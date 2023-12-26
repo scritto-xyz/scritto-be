@@ -2,6 +2,7 @@ package ink.seekr.repository
 
 import ink.seekr.dto.auth.SignupDto
 import ink.seekr.model.db.User
+import ink.seekr.model.db.UserType
 import ink.seekr.model.db.Users
 import ink.seekr.model.db.users
 import org.ktorm.database.Database
@@ -41,5 +42,9 @@ class UsersRepository(private val database: Database) {
             .toInt()
         logger.info("Created new user, ID: $id")
         return database.users.find { it.id eq id }
+    }
+
+    fun listArtists(): List<User> {
+        return database.users.toList().filter { it.userType == UserType.ARTIST }
     }
 }

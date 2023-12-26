@@ -27,8 +27,6 @@ class SecurityConfig(
             )
             .cors()
             .and()
-            .csrf()
-            .disable()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
@@ -40,5 +38,7 @@ class SecurityConfig(
             .anyRequest()
             .authenticated()
             .and()
+            .csrf()
+            .disable()
             .build()
 }
