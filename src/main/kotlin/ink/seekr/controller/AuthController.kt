@@ -1,6 +1,7 @@
 package ink.seekr.controller
 
 import ink.seekr.config.auth.UserAuthenticationProvider
+import ink.seekr.dto.auth.LoginResponse
 import ink.seekr.dto.auth.ResponseJwt
 import ink.seekr.dto.auth.SignupDto
 import ink.seekr.model.db.User
@@ -21,7 +22,7 @@ class AuthController(
 ) {
 
     @PostMapping("/login")
-    fun login(@AuthenticationPrincipal user: User): ResponseEntity<ResponseJwt> {
+    fun login(@AuthenticationPrincipal user: User): ResponseEntity<LoginResponse> {
         val responseJwt: ResponseJwt
         try {
             responseJwt = ResponseJwt(userAuthenticationProvider.createToken(user.email))
@@ -29,7 +30,8 @@ class AuthController(
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .build()
         }
-        return ResponseEntity.ok(responseJwt)
+        val response = LoginResponse(responseJwt.getJwt(), user)
+        return ResponseEntity.ok(response)
     }
 
     @PostMapping("/register")
