@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServic
 import org.springframework.boot.runApplication
 
 @SpringBootApplication(exclude = [UserDetailsServiceAutoConfiguration::class])
-class ScrittoApplication
+class SeekrApplication
 
 fun main(args: Array<String>) {
-    runApplication<ScrittoApplication>(*args)
+    runApplication<SeekrApplication>(*args)
 }
